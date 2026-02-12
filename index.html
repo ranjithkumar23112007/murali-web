@@ -17,7 +17,12 @@
         padding: 20px;
     }
 
-    .heart {
+    body.celebration {
+        background: #000;
+        overflow: hidden;
+    }
+
+    .main-heart {
         position: relative;
         width: 120px;
         height: 120px;
@@ -27,8 +32,8 @@
         margin-bottom: 30px;
     }
 
-    .heart::before,
-    .heart::after {
+    .main-heart::before,
+    .main-heart::after {
         content: "";
         position: absolute;
         width: 120px;
@@ -37,12 +42,12 @@
         border-radius: 50%;
     }
 
-    .heart::before {
+    .main-heart::before {
         top: -60px;
         left: 0;
     }
 
-    .heart::after {
+    .main-heart::after {
         left: 60px;
         top: 0;
     }
@@ -80,79 +85,101 @@
         text-align: center;
     }
 
-    .gallery {
+    .gallery-container {
         display: flex;
-        gap: 24px;
-        align-items: flex-start;
+        gap: 50px;
+        align-items: center;
         flex-wrap: wrap;
         justify-content: center;
-    }
-
-    .image-box {
         position: relative;
-        display: inline-block;
     }
 
-    .image-box img {
-        width: 280px;
-        height: auto;
-        border-radius: 10px;
-        display: block;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-
-    .image-box .heart-bubble {
-        position: absolute;
-        font-size: 22px;
-        pointer-events: none;
-        transform: translateY(0) scale(1);
-        animation: float 4s infinite ease-in-out, pulse 1.6s infinite ease-in-out;
-        opacity: 0.95;
-        will-change: transform, opacity;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    .image-box .heart-bubble:nth-of-type(1) { top: -18px; left: -28px; animation-delay: 0s; font-size:26px; }
-    .image-box .heart-bubble:nth-of-type(2) { top: -8px; right: -30px; animation-delay: 0.6s; font-size:20px; }
-    .image-box .heart-bubble:nth-of-type(3) { bottom: -18px; left: -20px; animation-delay: 1.2s; font-size:18px; }
-    .image-box .heart-bubble:nth-of-type(4) { bottom: -10px; right: -18px; animation-delay: 1.8s; font-size:22px; }
-
-    .remove-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        border: none;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
+    /* heart shaped photo containers - using SVG shape */
+    .heart-photo-box {
+        position: relative;
+        width: 240px;
+        height: 280px;
         cursor: pointer;
-        display: none;
+        display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.3s;
     }
 
-    .remove-btn:hover {
-        background: rgba(255, 0, 0, 0.8);
-        color: white;
+    .heart-photo-box svg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 6px 15px rgba(0,0,0,0.15));
     }
 
-    .image-box:hover .remove-btn {
+    .heart-photo-box img {
+        position: relative;
+        z-index: 2;
+        width: 200px;
+        height: 240px;
+        object-fit: cover;
+        object-position: center 35%;
+        border-radius: 20px;
+    }
+
+    .heart-photo-box.empty {
+        background: rgba(255, 255, 255, 0.3);
+        border: 2px dashed white;
+        border-radius: 20px;
         display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
     }
 
-    @keyframes float {
-        0%   { transform: translateY(0) scale(1); opacity: 0.95; }
-        50%  { transform: translateY(-14px) scale(1.06); opacity: 1; }
-        100% { transform: translateY(0) scale(1); opacity: 0.95; }
+    /* center heart */
+    .center-heart {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background: red;
+        transform: rotate(-45deg);
+        animation: beat 1s infinite;
+        flex-shrink: 0;
     }
 
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.12); }
-        100% { transform: scale(1); }
+    .center-heart::before,
+    .center-heart::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: red;
+        border-radius: 50%;
+    }
+
+    .center-heart::before {
+        top: -50px;
+        left: 0;
+    }
+
+    .center-heart::after {
+        left: 50px;
+        top: 0;
+    }
+
+    /* cracker burst animation */
+    .cracker {
+        position: fixed;
+        pointer-events: none;
+        font-size: 30px;
+        animation: crackerBurst 1.2s ease-out forwards;
+    }
+
+    @keyframes crackerBurst {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(var(--tx), var(--ty)) scale(0.3);
+        }
     }
 
     /* upload controls */
@@ -176,18 +203,6 @@
         color: white;
     }
 
-    .upload-controls input[type="text"] {
-        padding: 10px;
-        border-radius: 8px;
-        border: 2px solid white;
-        width: 300px;
-        font-size: 14px;
-    }
-
-    .upload-controls input[type="text"]::placeholder {
-        color: rgba(0,0,0,0.5);
-    }
-
     .visually-hidden {
         position: absolute !important;
         height: 1px; width: 1px;
@@ -195,15 +210,172 @@
         clip: rect(1px, 1px, 1px, 1px);
         white-space: nowrap;
     }
+
+    /* Question Section Styles */
+    .question-section {
+        display: none;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 40px;
+        border-radius: 20px;
+        margin-top: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .question-section.active {
+        display: block;
+    }
+
+    .question-section h2 {
+        color: white;
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px #d6336c;
+    }
+
+    .question-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .question-buttons button {
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .yes-btn {
+        background: #00d084;
+    }
+
+    .yes-btn:hover {
+        background: #00b870;
+        transform: scale(1.05);
+    }
+
+    .no-btn {
+        background: #ff6b9d;
+    }
+
+    .no-btn:hover {
+        background: #ff4a7e;
+        transform: scale(1.05);
+    }
+
+    /* Share Section */
+    .share-section {
+        display: none;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 20px;
+    }
+
+    .share-section.active {
+        display: block;
+    }
+
+    .share-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .share-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 12px;
+        background: #fff;
+        color: #ff4d6d;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Celebration Confetti */
+    .celebration-confetti {
+        position: fixed;
+        pointer-events: none;
+        font-size: 40px;
+        animation: celebrationBurst 3s ease-in forwards;
+        z-index: 9999;
+    }
+
+    @keyframes celebrationBurst {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) rotateZ(0deg) scale(1);
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: translate(var(--tx), var(--ty)) rotateZ(360deg) scale(0);
+        }
+    }
+
+    /* Hide sections after celebration */
+    body.celebration .main-content {
+        display: none;
+    }
+
+    .celebration-message {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffeb3b;
+        font-size: 60px;
+        font-weight: bold;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        z-index: 10000;
+        text-align: center;
+        animation: messageFloat 2s ease-in-out;
+    }
+
+    body.celebration .celebration-message {
+        display: block;
+    }
+
+    @keyframes messageFloat {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -150%) scale(1);
+        }
+    }
 </style>
 </head>
 <body>
 
-<div class="heart" aria-hidden="true"></div>
+<div class="main-content">
+    <div class="main-heart" aria-hidden="true"></div>
 
-<h1 id="message">Happy Valentine's Day murali 💖</h1>
+    <h1 id="message">Happy Valentine's Day 💖</h1>
 
-<button onclick="setName()">Personalize Message</button>
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <button onclick="setName()">Personalize Message</button>
+        <button onclick="shareWithPersonalization()" style="background: #4CAF50;">📤 Share</button>
+    </div>
 
 <script>
 function setName() {
@@ -213,74 +385,286 @@ function setName() {
             "Happy Valentine's Day, " + name + " 💖";
     }
 }
+
+// Load name from URL on page load
+function loadNameFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const sharedName = params.get('name');
+    if(sharedName) {
+        const decodedName = decodeURIComponent(sharedName);
+        document.getElementById("message").innerText =
+            "Happy Valentine's Day, " + decodedName + " 💖";
+    }
+}
+
+// Run on page load
+window.addEventListener('load', loadNameFromURL);
+
+function shareWithPersonalization() {
+    const messageText = document.getElementById("message").innerText;
+    const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+    const name = nameMatch ? nameMatch[1] : "";
+    
+    if(!name || name === "") {
+        alert("Please set a personalized name first by clicking 'Personalize Message'! 💌");
+        return;
+    }
+    
+    const currentUrl = window.location.href.split('?')[0];
+    const shareUrl = currentUrl + "?name=" + encodeURIComponent(name);
+    
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        alert(`✨ Link copied! When your friend opens it, they'll see: "Happy Valentine's Day, ${name} 💖"\n\nShare this link with them now! 💕`);
+    }).catch(() => {
+        alert(`Share this link:\n${shareUrl}`);
+    });
+}
 </script>
 
-<div class="gallery-section">
-    <div class="upload-controls" aria-label="Add your photo">
-        <label for="upload" class="visually-hidden">Upload your photo</label>
-        <input id="upload" type="file" accept="image/*" aria-label="Choose an image to upload">
-        <label for="altText" class="visually-hidden">Photo description</label>
-        <input id="altText" type="text" placeholder="Describe this photo for screen readers" aria-label="Description for screen readers">
-        <button id="addPhoto">Add Your Photo</button>
+
+    <div class="gallery-section">
+        <div class="upload-controls" aria-label="Add your photos">
+            <label for="upload1" class="visually-hidden">Upload first photo</label>
+            <input id="upload1" type="file" accept="image/*" aria-label="Choose first image to upload">
+            <label for="upload2" class="visually-hidden">Upload second photo</label>
+            <input id="upload2" type="file" accept="image/*" aria-label="Choose second image to upload">
+            <button id="addPhotos">Add Your Photos</button>
+        </div>
+
+        <div class="gallery-container" aria-live="polite" aria-label="Photo gallery">
+            <!-- First heart-shaped photo placeholder -->
+            <div class="heart-photo-box empty" id="heart-box-1">
+                <svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: rgba(255, 255, 255, 0.3); stroke: white; stroke-width: 2;">
+                    <path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/>
+                </svg>
+                <span>💕</span>
+            </div>
+
+            <!-- Center beating heart -->
+            <div class="center-heart" aria-hidden="true"></div>
+
+            <!-- Second heart-shaped photo placeholder -->
+            <div class="heart-photo-box empty" id="heart-box-2">
+                <svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: rgba(255, 255, 255, 0.3); stroke: white; stroke-width: 2;">
+                    <path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/>
+                </svg>
+                <span>💕</span>
+            </div>
+        </div>
     </div>
 
-    <div class="gallery" aria-live="polite" aria-label="Photo gallery">
-        <div class="image-box" id="original-box">
-            <img src="murali.jpeg" alt="murali" style="width: 280px;">
-            <span class="heart-bubble" aria-hidden="true">❤️</span>
-            <span class="heart-bubble" aria-hidden="true">💖</span>
-            <span class="heart-bubble" aria-hidden="true">💕</span>
-            <span class="heart-bubble" aria-hidden="true">💗</span>
+    <!-- Question Section -->
+    <div class="question-section" id="questionSection">
+        <h2>Will you be my Valentine? 💕</h2>
+        <div class="question-buttons">
+            <button class="yes-btn" onclick="handleYes()">YES! 💚</button>
+            <button class="no-btn" onclick="handleNo()">Maybe Later 😊</button>
         </div>
-        <!-- user uploaded image will appear here -->
-        <div class="image-box" id="user-box" style="display:none;">
-            <img id="user-preview" src="" alt="">
-            <span class="heart-bubble" aria-hidden="true">❤️</span>
-            <span class="heart-bubble" aria-hidden="true">💖</span>
-            <span class="heart-bubble" aria-hidden="true">💕</span>
-            <span class="heart-bubble" aria-hidden="true">💗</span>
-            <button class="remove-btn" aria-label="Remove your photo">✕</button>
+    </div>
+
+    <!-- Share Section -->
+    <div class="share-section" id="shareSection">
+        <h3 style="color: white; margin-bottom: 10px;">Share with your friend! 💌</h3>
+        <div class="share-buttons">
+            <button class="share-btn" onclick="shareViaMessage()">📱 Send Message</button>
+            <button class="share-btn" onclick="shareViaLink()">🔗 Copy Link</button>
+            <button class="share-btn" onclick="shareViaOther()">📤 Share More</button>
         </div>
     </div>
 </div>
 
+<div class="celebration-message">YES! YOU'RE MY VALENTINE! 💕🎉</div>
+
 <script>
-document.getElementById('addPhoto').addEventListener('click', function () {
-    const fileInput = document.getElementById('upload');
-    const altInput = document.getElementById('altText');
-    const userBox = document.getElementById('user-box');
-    const userImg = document.getElementById('user-preview');
-
-    if (!fileInput.files || fileInput.files.length === 0) {
-        alert('Please choose a photo to upload');
-        return;
-    }
-
-    const file = fileInput.files[0];
-    if (!file.type.startsWith('image/')) {
-        alert('Please choose a valid image file');
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        userImg.src = e.target.result;
-        const userAlt = (altInput.value || '').trim();
-        userImg.alt = userAlt || 'User uploaded Valentine photo';
-        userBox.style.display = 'inline-block';
-    };
-    reader.readAsDataURL(file);
-});
-
-// remove photo button
-document.querySelector('.remove-btn').addEventListener('click', function () {
-    const userBox = document.getElementById('user-box');
-    const fileInput = document.getElementById('upload');
-    const altInput = document.getElementById('altText');
+function createCrackerBurst(x, y) {
+    const crackerEmojis = ['🎆', '✨', '💥', '⭐', '🌟', '💫'];
+    const numCrackers = 15;
     
-    userBox.style.display = 'none';
-    fileInput.value = '';
-    altInput.value = '';
+    for (let i = 0; i < numCrackers; i++) {
+        const cracker = document.createElement('div');
+        cracker.className = 'cracker';
+        cracker.textContent = crackerEmojis[Math.floor(Math.random() * crackerEmojis.length)];
+        
+        const angle = (i / numCrackers) * Math.PI * 2;
+        const distance = 100 + Math.random() * 50;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        cracker.style.left = x + 'px';
+        cracker.style.top = y + 'px';
+        cracker.style.setProperty('--tx', tx + 'px');
+        cracker.style.setProperty('--ty', ty + 'px');
+        
+        document.body.appendChild(cracker);
+        
+        setTimeout(() => cracker.remove(), 1200);
+    }
+}
+
+function createFullScreenCelebration() {
+    document.body.classList.add('celebration');
+    
+    const celebrationEmojis = ['🎆', '✨', '💥', '⭐', '🌟', '💫', '🎉', '🎊', '💕', '❤️', '🥳'];
+    
+    // Create continuous confetti burst
+    for (let burst = 0; burst < 8; burst++) {
+        setTimeout(() => {
+            for (let i = 0; i < 25; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'celebration-confetti';
+                confetti.textContent = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+                
+                const angle = (Math.random() * Math.PI * 2);
+                const distance = 150 + Math.random() * 200;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 200;
+                
+                const x = window.innerWidth / 2 + (Math.random() - 0.5) * window.innerWidth;
+                const y = window.innerHeight / 2;
+                
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.setProperty('--tx', tx + 'px');
+                confetti.style.setProperty('--ty', ty + 'px');
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }, burst * 400);
+    }
+}
+
+function handleYes() {
+    createFullScreenCelebration();
+    setTimeout(() => {
+        document.getElementById('questionSection').style.display = 'none';
+        showShareSection();
+    }, 2000);
+}
+
+function handleNo() {
+    const noBtn = document.querySelector('.no-btn');
+    noBtn.textContent = 'Maybe next year? 💝';
+    setTimeout(() => {
+        showShareSection();
+    }, 800);
+}
+
+function showShareSection() {
+    document.getElementById('shareSection').classList.add('active');
+}
+
+function getShareUrl() {
+    const messageText = document.getElementById("message").innerText;
+    const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+    const name = nameMatch ? nameMatch[1] : "";
+    
+    const currentUrl = window.location.href.split('?')[0];
+    if(name && name !== "") {
+        return currentUrl + "?name=" + encodeURIComponent(name);
+    }
+    return currentUrl;
+}
+
+function shareViaMessage() {
+    const shareUrl = getShareUrl();
+    const message = encodeURIComponent("Check out my Valentine! Will you be my Valentine? 💕\n" + shareUrl);
+    window.open("sms:?body=" + message, "_blank");
+    alert("Message will be sent with the link!");
+}
+
+function shareViaLink() {
+    const shareUrl = getShareUrl();
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        const messageText = document.getElementById("message").innerText;
+        const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+        const name = nameMatch ? nameMatch[1] : "";
+        
+        if(name && name !== "") {
+            alert(`✨ Link copied with personalized name!\n\nWhen your friend opens it, they'll see:\n"Happy Valentine's Day, ${name} 💖"\n\nNow share it! 💌`);
+        } else {
+            alert("Link copied to clipboard! Now you can paste it anywhere to share with your friend 💌");
+        }
+    }).catch(() => {
+        alert("Link: " + shareUrl + "\n\nCopy this and share it with your friend!");
+    });
+}
+
+function shareViaOther() {
+    const shareUrl = getShareUrl();
+    const messageText = document.getElementById("message").innerText;
+    const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+    const name = nameMatch ? nameMatch[1] : "";
+    
+    const title = name ? `Will you be my Valentine, ${name}?` : "Will you be my Valentine?";
+    const text = name ? `Happy Valentine's Day, ${name}! 💕` : "Check out my Valentine request! 💕";
+    
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: text,
+            url: shareUrl
+        }).catch(() => {});
+    } else {
+        alert("Share this link with your friend:\n" + shareUrl);
+    }
+}
+
+document.getElementById('addPhotos').addEventListener('click', function () {
+    const fileInput1 = document.getElementById('upload1');
+    const fileInput2 = document.getElementById('upload2');
+    const heartBox1 = document.getElementById('heart-box-1');
+    const heartBox2 = document.getElementById('heart-box-2');
+
+    if (!fileInput1.files || fileInput1.files.length === 0) {
+        alert('Please choose first photo to upload');
+        return;
+    }
+
+    if (!fileInput2.files || fileInput2.files.length === 0) {
+        alert('Please choose second photo to upload');
+        return;
+    }
+
+    const file1 = fileInput1.files[0];
+    const file2 = fileInput2.files[0];
+
+    if (!file1.type.startsWith('image/') || !file2.type.startsWith('image/')) {
+        alert('Please choose valid image files');
+        return;
+    }
+
+    // Load first image
+    const reader1 = new FileReader();
+    reader1.onload = function (e) {
+        heartBox1.classList.remove('empty');
+        heartBox1.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + e.target.result + '" alt="First Valentine photo">';
+        
+        const rect1 = heartBox1.getBoundingClientRect();
+        const centerX1 = rect1.left + rect1.width / 2;
+        const centerY1 = rect1.top + rect1.height / 2;
+        createCrackerBurst(centerX1, centerY1);
+    };
+    reader1.readAsDataURL(file1);
+
+    // Load second image
+    const reader2 = new FileReader();
+    reader2.onload = function (e) {
+        heartBox2.classList.remove('empty');
+        heartBox2.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + e.target.result + '" alt="Second Valentine photo">';
+        
+        const rect2 = heartBox2.getBoundingClientRect();
+        const centerX2 = rect2.left + rect2.width / 2;
+        const centerY2 = rect2.top + rect2.height / 2;
+        createCrackerBurst(centerX2, centerY2);
+        
+        // Show question section after both images are loaded
+        setTimeout(() => {
+            document.getElementById('questionSection').classList.add('active');
+        }, 1500);
+    };
+    reader2.readAsDataURL(file2);
 });
 </script>
 
