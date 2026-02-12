@@ -1,0 +1,59 @@
+# 🚀 QUICK START - 3 Steps to Go Live
+
+## Step 1️⃣: Get Firebase Credentials (5 min)
+📖 **See SETUP_GUIDE.md** - Section "Step 1: Create a Firebase Project"
+- Go to https://console.firebase.google.com/
+- Create new project
+- Copy your Firebase config
+- Paste into `index.html` (replace the firebaseConfig object)
+- Enable Realtime Database in Test Mode
+
+## Step 2️⃣: Deploy to Netlify (3 min)
+📖 **See SETUP_GUIDE.md** - Section "Step 2: Deploy to Netlify"
+
+**Easiest way:**
+1. Go to https://netlify.com
+2. Sign up (free)
+3. Drag & drop your `index.html` file
+4. Get your live URL instantly ✅
+
+## Step 3️⃣: Start Using!
+1. Open your Netlify link
+2. Click "Personalize Message" → Enter crush's name
+3. Click "Add Your Photos" → Upload 2 images
+4. Click "Share with Friend" → Copy link
+5. Send link to your crush! 💕
+
+---
+
+## 🎯 What Happens Next
+
+**Your Crush Opens the Link:**
+- ✅ Sees their personalized greeting
+- ✅ Sees your 2 photos (saved in Firebase!)
+- ✅ Answers "Will you be my Valentine?"
+- ✅ If YES: Celebration + ❤️ Red heart!
+- ✅ If NO: 🤍 White heart appears
+
+**The Link Works:**
+- ✅ Across different devices (Android, iPhone, Computer)
+- ✅ Different browsers (Chrome, Safari, etc.)
+- ✅ Can be shared with anyone globally
+- ✅ Images persist indefinitely (saved in Firebase)
+
+---
+
+## ⏱️ Total Time: ~10 minutes
+- Firebase setup: 5 min
+- Netlify deploy: 3 min
+- Testing: 2 min
+
+## 📋 Files You Need to Update:
+1. ✅ `index.html` - Update firebaseConfig (REQUIRED!)
+2. ✅ Upload to Netlify (just drag & drop)
+
+That's it! You're ready to send your Valentine! 💖
+
+---
+
+**Questions? See SETUP_GUIDE.md for detailed instructions!**
