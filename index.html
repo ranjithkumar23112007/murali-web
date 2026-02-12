@@ -61,6 +61,13 @@
         color: white;
         text-shadow: 2px 2px 5px #d6336c;
         text-align: center;
+        font-size: 24px;
+    }
+
+    @media (min-width: 768px) {
+        h1 {
+            font-size: 32px;
+        }
     }
 
     button {
@@ -69,10 +76,17 @@
         border-radius: 20px;
         background: #ff4d6d;
         color: white;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
         box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         transition: background 0.3s;
+    }
+
+    @media (min-width: 768px) {
+        button {
+            font-size: 16px;
+            padding: 12px 24px;
+        }
     }
 
     button:hover {
@@ -87,22 +101,35 @@
 
     .gallery-container {
         display: flex;
-        gap: 50px;
+        gap: 20px;
         align-items: center;
         flex-wrap: wrap;
         justify-content: center;
         position: relative;
     }
 
+    @media (min-width: 768px) {
+        .gallery-container {
+            gap: 50px;
+        }
+    }
+
     /* heart shaped photo containers - using SVG shape */
     .heart-photo-box {
         position: relative;
-        width: 240px;
-        height: 280px;
+        width: 160px;
+        height: 190px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .heart-photo-box {
+            width: 240px;
+            height: 280px;
+        }
     }
 
     .heart-photo-box svg {
@@ -115,11 +142,19 @@
     .heart-photo-box img {
         position: relative;
         z-index: 2;
-        width: 200px;
-        height: 240px;
+        width: 130px;
+        height: 160px;
         object-fit: cover;
         object-position: center 35%;
-        border-radius: 20px;
+        border-radius: 12px;
+    }
+
+    @media (min-width: 768px) {
+        .heart-photo-box img {
+            width: 200px;
+            height: 240px;
+            border-radius: 20px;
+        }
     }
 
     .heart-photo-box.empty {
@@ -135,12 +170,19 @@
     /* center heart */
     .center-heart {
         position: relative;
-        width: 100px;
-        height: 100px;
+        width: 60px;
+        height: 60px;
         background: red;
         transform: rotate(-45deg);
         animation: beat 1s infinite;
         flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+        .center-heart {
+            width: 100px;
+            height: 100px;
+        }
     }
 
     .center-heart::before,
@@ -154,13 +196,33 @@
     }
 
     .center-heart::before {
-        top: -50px;
+        top: -30px;
         left: 0;
+        width: 60px;
+        height: 60px;
     }
 
     .center-heart::after {
-        left: 50px;
+        left: 30px;
         top: 0;
+        width: 60px;
+        height: 60px;
+    }
+
+    @media (min-width: 768px) {
+        .center-heart::before {
+            top: -50px;
+            left: 0;
+            width: 100px;
+            height: 100px;
+        }
+
+        .center-heart::after {
+            left: 50px;
+            top: 0;
+            width: 100px;
+            height: 100px;
+        }
     }
 
     /* cracker burst animation */
@@ -184,23 +246,41 @@
 
     /* upload controls */
     .upload-controls {
-        margin-top: 20px;
+        margin-top: 15px;
         display: flex;
-        gap: 12px;
+        gap: 8px;
         align-items: center;
         flex-wrap: wrap;
         justify-content: center;
         background: rgba(255, 255, 255, 0.1);
-        padding: 15px;
+        padding: 12px;
         border-radius: 12px;
+        font-size: 12px;
+    }
+
+    @media (min-width: 768px) {
+        .upload-controls {
+            gap: 12px;
+            padding: 15px;
+            font-size: 14px;
+        }
     }
 
     .upload-controls input[type="file"] {
-        padding: 8px;
-        border-radius: 8px;
+        padding: 6px;
+        border-radius: 6px;
         border: 2px solid white;
         cursor: pointer;
         color: white;
+        font-size: 11px;
+    }
+
+    @media (min-width: 768px) {
+        .upload-controls input[type="file"] {
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
     }
 
     .visually-hidden {
@@ -228,9 +308,16 @@
 
     .question-section h2 {
         color: white;
-        font-size: 28px;
-        margin-bottom: 20px;
+        font-size: 20px;
+        margin-bottom: 15px;
         text-shadow: 2px 2px 5px #d6336c;
+    }
+
+    @media (min-width: 768px) {
+        .question-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
     }
 
     .question-buttons {
@@ -241,10 +328,17 @@
     }
 
     .question-buttons button {
-        padding: 15px 40px;
-        font-size: 18px;
+        padding: 12px 24px;
+        font-size: 14px;
         font-weight: bold;
         transition: all 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+        .question-buttons button {
+            padding: 15px 40px;
+            font-size: 18px;
+        }
     }
 
     .yes-btn {
@@ -397,16 +491,52 @@ function loadNameFromURL() {
     }
 }
 
+// Load saved images from localStorage
+function loadSavedImages() {
+    const savedImage1 = localStorage.getItem('valentineImage1');
+    const savedImage2 = localStorage.getItem('valentineImage2');
+    
+    if(savedImage1) {
+        const heartBox1 = document.getElementById('heart-box-1');
+        heartBox1.classList.remove('empty');
+        heartBox1.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + savedImage1 + '" alt="First Valentine photo">';
+    }
+    
+    if(savedImage2) {
+        const heartBox2 = document.getElementById('heart-box-2');
+        heartBox2.classList.remove('empty');
+        heartBox2.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + savedImage2 + '" alt="Second Valentine photo">';
+    }
+    
+    // If both images are loaded and we have a name from URL, show question section
+    if(savedImage1 && savedImage2) {
+        setTimeout(() => {
+            document.getElementById('questionSection').classList.add('active');
+        }, 500);
+    }
+}
+
 // Run on page load
-window.addEventListener('load', loadNameFromURL);
+window.addEventListener('load', function() {
+    loadNameFromURL();
+    loadSavedImages();
+});
 
 function shareWithPersonalization() {
     const messageText = document.getElementById("message").innerText;
     const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
     const name = nameMatch ? nameMatch[1] : "";
     
+    const savedImage1 = localStorage.getItem('valentineImage1');
+    const savedImage2 = localStorage.getItem('valentineImage2');
+    
     if(!name || name === "") {
         alert("Please set a personalized name first by clicking 'Personalize Message'! 💌");
+        return;
+    }
+    
+    if(!savedImage1 || !savedImage2) {
+        alert("Please add both photos first by clicking 'Add Your Photos'! 📸");
         return;
     }
     
@@ -414,7 +544,7 @@ function shareWithPersonalization() {
     const shareUrl = currentUrl + "?name=" + encodeURIComponent(name);
     
     navigator.clipboard.writeText(shareUrl).then(() => {
-        alert(`✨ Link copied! When your friend opens it, they'll see: "Happy Valentine's Day, ${name} 💖"\n\nShare this link with them now! 💕`);
+        alert(`✨ Link copied! When your friend opens it, they'll see:\n\n"Happy Valentine's Day, ${name} 💖"\n\n+ Your photos will be displayed!\n\nShare this link with them now! 💕`);
     }).catch(() => {
         alert(`Share this link:\n${shareUrl}`);
     });
@@ -569,20 +699,24 @@ function getShareUrl() {
 
 function shareViaMessage() {
     const shareUrl = getShareUrl();
-    const message = encodeURIComponent("Check out my Valentine! Will you be my Valentine? 💕\n" + shareUrl);
+    const messageText = document.getElementById("message").innerText;
+    const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+    const name = nameMatch ? nameMatch[1] : "";
+    
+    const message = encodeURIComponent(`Check out my Valentine! Will you be my Valentine, ${name}? 💕\n${shareUrl}`);
     window.open("sms:?body=" + message, "_blank");
     alert("Message will be sent with the link!");
 }
 
 function shareViaLink() {
     const shareUrl = getShareUrl();
+    const messageText = document.getElementById("message").innerText;
+    const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
+    const name = nameMatch ? nameMatch[1] : "";
+    
     navigator.clipboard.writeText(shareUrl).then(() => {
-        const messageText = document.getElementById("message").innerText;
-        const nameMatch = messageText.match(/Happy Valentine's Day, (.+) 💖/);
-        const name = nameMatch ? nameMatch[1] : "";
-        
         if(name && name !== "") {
-            alert(`✨ Link copied with personalized name!\n\nWhen your friend opens it, they'll see:\n"Happy Valentine's Day, ${name} 💖"\n\nNow share it! 💌`);
+            alert(`✨ Link copied with personalized name!\n\nWhen your friend opens it, they'll see:\n"Happy Valentine's Day, ${name} 💖"\n+ Your beautiful photos!\n\nNow share it! 💌`);
         } else {
             alert("Link copied to clipboard! Now you can paste it anywhere to share with your friend 💌");
         }
@@ -638,8 +772,11 @@ document.getElementById('addPhotos').addEventListener('click', function () {
     // Load first image
     const reader1 = new FileReader();
     reader1.onload = function (e) {
+        const imageData = e.target.result;
+        localStorage.setItem('valentineImage1', imageData);
+        
         heartBox1.classList.remove('empty');
-        heartBox1.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + e.target.result + '" alt="First Valentine photo">';
+        heartBox1.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + imageData + '" alt="First Valentine photo">';
         
         const rect1 = heartBox1.getBoundingClientRect();
         const centerX1 = rect1.left + rect1.width / 2;
@@ -651,8 +788,11 @@ document.getElementById('addPhotos').addEventListener('click', function () {
     // Load second image
     const reader2 = new FileReader();
     reader2.onload = function (e) {
+        const imageData = e.target.result;
+        localStorage.setItem('valentineImage2', imageData);
+        
         heartBox2.classList.remove('empty');
-        heartBox2.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + e.target.result + '" alt="Second Valentine photo">';
+        heartBox2.innerHTML = '<svg viewBox="0 0 240 280" preserveAspectRatio="none" style="fill: red;"><path d="M 120 280 C 60 240 20 200 20 140 C 20 100 50 70 90 70 C 110 70 130 80 120 100 C 110 80 130 70 150 70 C 190 70 220 100 220 140 C 220 200 180 240 120 280 Z"/></svg><img src="' + imageData + '" alt="Second Valentine photo">';
         
         const rect2 = heartBox2.getBoundingClientRect();
         const centerX2 = rect2.left + rect2.width / 2;
